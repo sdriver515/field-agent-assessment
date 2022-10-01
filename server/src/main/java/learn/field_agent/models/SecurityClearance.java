@@ -44,4 +44,5 @@ public class SecurityClearance {
     public int hashCode() {
         return Objects.hash(securityClearanceId, name);
     }
-}
+
+}//end
