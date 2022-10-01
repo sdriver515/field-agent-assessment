@@ -86,4 +86,4 @@ public class LocationJdbcTemplateRepository implements LocationRepository {
         return jdbcTemplate.update(
                 "delete from location where location_id = ?", locationId) > 0;
     }
-}
+}//end

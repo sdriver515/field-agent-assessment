@@ -1,9 +1,6 @@
 package learn.field_agent.data;
 
-import learn.field_agent.data.mappers.AgencyAgentMapper;
-import learn.field_agent.data.mappers.AgentMapper;
-import learn.field_agent.data.mappers.LocationMapper;
-import learn.field_agent.data.mappers.SecurityClearanceMapper;
+import learn.field_agent.data.mappers.*;
 import learn.field_agent.models.Agency;
 import learn.field_agent.models.Agent;
 import learn.field_agent.models.SecurityClearance;
@@ -28,7 +25,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public List<SecurityClearance> findAll() {
-            final String sql = "select security_clearance_id, `name` "
+            final String sql = "select security_clearance_id, `name` as security_clearance_name "
                     + "from security_clearance limit 1000;";
             return jdbcTemplate.query(sql, new SecurityClearanceMapper());
 
@@ -37,13 +34,18 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
     @Override
     public SecurityClearance findById(int securityClearanceId) {
 
-        final String sql = "select security_clearance_id, name security_clearance_name "
+        final String sql = "select security_clearance_id, `name` as security_clearance_name "
                 + "from security_clearance "
                 + "where security_clearance_id = ?;";
 
-        return jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId)
-                .stream()
-                .findFirst().orElse(null);
+        SecurityClearance result = jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId).stream()
+                .findAny().orElse(null);
+
+        if (result != null) {
+            addAgents(result);
+        }
+
+        return result;
     }//findById
 
     @Override
@@ -65,20 +67,24 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
         return securityClearance;
     }//add
 
-    private void addAgentsAgency(SecurityClearance securityClearance) {
+    private void addAgents(SecurityClearance securityClearance) {//not sure how well this will work
 
-        final String sql = "select agency_id, agent_id, identifier, security_clearance_id, activation, is_active "
-                + "from agency_agent "
-                + "where security_clearance_id = ?";
+        final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
+                + "sc.security_clearance_id, sc.name security_clearance_name, "
+                + "a.first_name, a.middle_name, a.last_name, a.dob, a.height_in_inches "
+                + "from agency_agent aa "
+                + "inner join agent a on aa.agent_id = a.agent_id "
+                + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
+                + "where aa.security_clearance_id = ?";
 
         var agencyAgents = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearance.getSecurityClearanceId());
-        securityClearance.setAgencyAgent(agencyAgents);
-    }
+        securityClearance.setAgents(agencyAgents);
+    }//addAgents
 
     @Override
     public boolean update(SecurityClearance securityClearance) {
         final String sql = "update security_clearance set "
-                + "`name` = ? "
+                + "name = ? "
                 + "where security_clearance_id = ?;";
 
         return jdbcTemplate.update(sql,

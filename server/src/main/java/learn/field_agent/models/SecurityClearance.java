@@ -1,11 +1,14 @@
 package learn.field_agent.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SecurityClearance {
 
     private int securityClearanceId;
     private String name;
+    private List<AgencyAgent> agents = new ArrayList<>();
 
     public int getSecurityClearanceId() {
         return securityClearanceId;
@@ -21,6 +24,13 @@ public class SecurityClearance {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public List<AgencyAgent> getAgents() {
+        return new ArrayList<>(agents);
+    }
+
+    public void setAgents(List<AgencyAgent> agents) {
+        this.agents = agents;
     }
 
     public SecurityClearance() {

@@ -6,6 +6,7 @@ public class Alias {
     private String name;
     private String persona;
     private int agentId;
+//    private Agent agent;
 
 //Getters and Setters
 
@@ -40,5 +41,14 @@ public class Alias {
     public void setAgentId(int agentId) {
         this.agentId = agentId;
     }
+
+//    public Agent getAgent() {
+//        return agent;
+//    }
+//
+//    public void setAgent(Agent agent) {
+//        this.agent = agent;
+//    }
+
 
 }//end

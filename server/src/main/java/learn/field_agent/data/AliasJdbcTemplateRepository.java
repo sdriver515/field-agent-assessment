@@ -19,8 +19,20 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
     }
 
     @Override
+    public Alias findById(int aliasId) {
+
+        final String sql = "select alias_id, name, persona, agent_id "
+                + "from alias "
+                + "where alias_id = ?;";
+
+        return jdbcTemplate.query(sql, new AliasMapper(), aliasId).stream()
+                .findFirst()
+                .orElse(null);
+    }//findById
+
+    @Override
     public Alias add(Alias alias) {
-        final String sql = "insert into alias (name, persona, agency_id)"
+        final String sql = "insert into alias (name, persona, agent_id)"
                 + "values (?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -39,17 +51,6 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
         alias.setAliasId(keyHolder.getKey().intValue());
         return alias;
     }//add
-
-    @Override
-    public Alias findById(int aliasId) {
-        final String sql = "select alias_id, name, persona, agency_id "
-                + "from alias "
-                + "where alias_id = ?;";
-
-        return jdbcTemplate.query(sql, new AliasMapper(), aliasId).stream()
-                .findFirst()
-                .orElse(null);
-    }//findById
 
     @Override
     public boolean update(Alias alias) {
