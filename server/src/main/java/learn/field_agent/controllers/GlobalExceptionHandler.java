@@ -1,5 +1,6 @@
 package learn.field_agent.controllers;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,11 @@ public class GlobalExceptionHandler {
 
     //SECOND EXCEPTION HANDLER
     //they want us to handle a data integrity violation exception
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse("This is a data integrity violation exception."),
+                HttpStatus.CONFLICT);
+    }
 
 }//end

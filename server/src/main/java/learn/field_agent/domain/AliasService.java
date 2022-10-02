@@ -5,6 +5,7 @@ import learn.field_agent.data.AliasRepository;
 import learn.field_agent.models.Agency;
 import learn.field_agent.models.Alias;
 import learn.field_agent.models.Location;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class AliasService {
 
     private Result<Alias> validate(Alias alias) {
         Result<Alias> result = new Result<>();
+        List<Alias> existingAliases = repository.findAll();
         if (alias == null) {
             result.addMessage("alias cannot be null", ResultType.INVALID);
             return result;
@@ -64,7 +66,14 @@ public class AliasService {
         if (Validations.isNullOrBlank(alias.getName())) {
             result.addMessage("name is required", ResultType.INVALID);
         }
-        //more stuff
+
+        for(Alias a: existingAliases){
+            if(alias.getName().equalsIgnoreCase(a.getName())){
+                if(Validations.isNullOrBlank(alias.getPersona())){
+                    result.addMessage("persona is required if the name is duplicated", ResultType.INVALID);
+                }
+            }
+        }
 
         return result;
     }//validate

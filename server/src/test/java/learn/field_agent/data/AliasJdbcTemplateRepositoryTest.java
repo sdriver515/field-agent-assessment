@@ -1,13 +1,12 @@
 package learn.field_agent.data;
 
-import learn.field_agent.models.AgencyAgent;
-import learn.field_agent.models.Agent;
-import learn.field_agent.models.Alias;
-import learn.field_agent.models.Location;
+import learn.field_agent.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -28,6 +27,13 @@ public class AliasJdbcTemplateRepositoryTest {
     //Something to find alias via agent
 
     @Test
+    void shouldFindAll(){
+        List<Alias> actual = repository.findAll();
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+    }//shouldFindAll
+
+    @Test
     void shouldAdd() {
         Alias alias = makeAlias();
         Alias actual = repository.add(alias);
@@ -38,7 +44,7 @@ public class AliasJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdate() {
         Alias alias = makeAlias();
-        alias.setAliasId(6);
+        alias.setPersona("Fake persona");
         assertTrue(repository.update(alias));
 
         alias.setAliasId(12);

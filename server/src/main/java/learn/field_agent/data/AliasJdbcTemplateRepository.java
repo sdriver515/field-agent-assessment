@@ -1,9 +1,6 @@
 package learn.field_agent.data;
 
-import learn.field_agent.data.mappers.AgentAgencyMapper;
 import learn.field_agent.data.mappers.AliasMapper;
-import learn.field_agent.models.AgencyAgent;
-import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository{
@@ -20,6 +18,14 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
     public AliasJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    @Override
+    public List<Alias> findAll() {
+        final String sql = "select alias_id, name, persona, agent_id "
+                + "from alias limit 1000;";
+        return jdbcTemplate.query(sql, new AliasMapper());
+
+    }//findAll
 
     @Override
     public Alias add(Alias alias) {
@@ -48,12 +54,20 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
 
         final String sql = "update alias set "
                 + "name = ?, "
-                + "persona = ? "
+                + "persona = ?, "
+                + "agent_id = ? "
                 + "where alias_id = ?;";
+//                + "where alias_id = ?;";
+
+//        return jdbcTemplate.update(sql,
+//                alias.getName(),
+//                alias.getPersona(),
+//                alias.getAliasId()) > 0;
 
         return jdbcTemplate.update(sql,
                 alias.getName(),
                 alias.getPersona(),
+                alias.getAgentId(),
                 alias.getAliasId()) > 0;
 
     }//update
