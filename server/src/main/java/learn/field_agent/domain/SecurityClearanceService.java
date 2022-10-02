@@ -66,6 +66,7 @@ public class SecurityClearanceService {
 
     private Result<SecurityClearance> validate(SecurityClearance securityClearance) {
         Result<SecurityClearance> result = new Result<>();
+        List<SecurityClearance> existingSecurityClearances = repository.findAll();
 
         if (securityClearance == null) {
             result.addMessage("securityClearance cannot be null", ResultType.INVALID);
@@ -75,6 +76,11 @@ public class SecurityClearanceService {
         if (Validations.isNullOrBlank(securityClearance.getName())) {
             result.addMessage("name is required", ResultType.INVALID);
         }
+
+        for(SecurityClearance s: existingSecurityClearances){
+            if(securityClearance.getName().equalsIgnoreCase(s.getName())){
+                result.addMessage("You cannot have repeat names.", ResultType.INVALID);
+            }}
 
         return result;
     }//validate

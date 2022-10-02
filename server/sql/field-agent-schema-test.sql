@@ -107,7 +107,15 @@ begin
 	alter table agency auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
+    delete from security_clearance;
+    alter table security_clearance auto_increment = 1;
+	delete from alias;
+	alter table alias auto_increment = 1;
     
+    insert into security_clearance(security_clearance_id, name) values 
+		(1, 'Secret'),
+		(2, 'Top Secret');
+        
     insert into agency(agency_id, short_name, long_name) values
         (1, 'ACME', 'Agency to Classify & Monitor Evildoers'),
         (2, 'MASK', 'Mobile Armored Strike Kommand'),
@@ -134,6 +142,9 @@ begin
 		('Ulises','B','Muhammad','2008-04-01',80),
 		('Phylys','Y','Howitt','1979-03-28',68);
         
+        insert into alias(alias_id, name, persona, agent_id) values
+		(1, 'Me', 'Student', 3);
+        
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)
     select
@@ -147,18 +158,7 @@ begin
     where agent.agent_id not in (6, 8)
     and agency.agency_id != 2;
     
-    insert into security_clearance 
-    (security_clearance_id, name)
-    values 
-		(1, 'Secret'),
-		(2, 'Top Secret');
-    
 
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
-
--- data
--- insert into security_clearance values
--- 	(1, 'Secret'),
---     (2, 'Top Secret');

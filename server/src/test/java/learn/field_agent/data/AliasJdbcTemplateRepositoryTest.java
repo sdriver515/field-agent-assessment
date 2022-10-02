@@ -32,31 +32,30 @@ public class AliasJdbcTemplateRepositoryTest {
         Alias alias = makeAlias();
         Alias actual = repository.add(alias);
         assertNotNull(actual);
-        assertEquals(100, actual.getAliasId());
+        assertEquals(2, actual.getAliasId());
     }//shouldAdd
 
     @Test
     void shouldUpdate() {
         Alias alias = makeAlias();
-//        alias.setAliasId(8); // avoid duplicates
-//        alias.getAgent().setAgentId(1);
-//        assertTrue(repository.update(alias));
-//
-//        alias.setAliasId(12);
-//        assertFalse(repository.update(alias));
+        alias.setAliasId(6);
+        assertTrue(repository.update(alias));
+
+        alias.setAliasId(12);
+        assertFalse(repository.update(alias));
     }
 
     @Test
     void shouldDelete() {
-        assertTrue(repository.deleteById(5));
-        assertFalse(repository.deleteById(5));
+        assertTrue(repository.deleteById(1));
+        assertFalse(repository.deleteById(1));
     }//shouldDelete
 
     Alias makeAlias() {
         Alias alias = new Alias();
-        alias.setName("Test Name");
+        alias.setName("Sarah");
         alias.setPersona("A person that does not exist.");
-        alias.setAgentId(100);
+        alias.setAgentId(6);
         return alias;
     }//makeAlias
 

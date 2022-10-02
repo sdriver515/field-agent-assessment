@@ -21,6 +21,19 @@ public class SecurityClearanceServiceTest {
     SecurityClearanceRepository repository;
 
     @Test
+    void shouldAdd() {
+        SecurityClearance securityClearance = makeSecurityClearance();
+        SecurityClearance mockOut = makeSecurityClearance();
+        mockOut.setSecurityClearanceId(1);
+
+        when(repository.add(securityClearance)).thenReturn(mockOut);
+
+        Result<SecurityClearance> actual = service.add(securityClearance);
+        assertEquals(ResultType.SUCCESS, actual.getType());
+        assertEquals(mockOut, actual.getPayload());
+    }//shouldAdd
+
+    @Test
     void shouldNotAddWhenInvalid() {
         SecurityClearance securityClearance = makeSecurityClearance();
         securityClearance.setName("   ");
@@ -35,17 +48,16 @@ public class SecurityClearanceServiceTest {
     }//shouldNotAddWhenInvalid
 
     @Test
-    void shouldAdd() {
+    void shouldNotAddWhenDuplicateName() {
         SecurityClearance securityClearance = makeSecurityClearance();
-        SecurityClearance mockOut = makeSecurityClearance();
-        mockOut.setSecurityClearanceId(1);
-
-        when(repository.add(securityClearance)).thenReturn(mockOut);
+        securityClearance.setName("Secret");
 
         Result<SecurityClearance> actual = service.add(securityClearance);
-        assertEquals(ResultType.SUCCESS, actual.getType());
-        assertEquals(mockOut, actual.getPayload());
-    }//shouldAdd
+
+        assertEquals(ResultType.INVALID, actual.getType());
+    }//shouldNotAddWhenDuplicateName
+
+
 
     @Test
     void shouldNotUpdateWhenInvalid() {

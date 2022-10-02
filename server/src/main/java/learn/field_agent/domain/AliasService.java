@@ -15,10 +15,6 @@ public class AliasService {
         this.repository = repository;
     }
 
-    public Alias findById(int aliasId) {
-        return repository.findById(aliasId);
-    }
-
     public Result<Alias> add(Alias alias) {
         Result<Alias> result = validate(alias);
         if (!result.isSuccess()) {

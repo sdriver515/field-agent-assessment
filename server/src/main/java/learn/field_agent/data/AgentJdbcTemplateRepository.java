@@ -48,6 +48,24 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         return agent;
     }
 
+//    @Override
+//    @Transactional
+//    public Agent findById(int agentId) {
+//
+//        final String sql = "select agent_id, first_name, middle_name, last_name, dob, height_in_inches "
+//                + "from agent "
+//                + "where agent_id = ?;";
+//
+//        Agent agent = jdbcTemplate.query(sql, new AgentMapper(), agentId).stream()
+//                .findFirst().orElse(null);
+//
+//        if (agent != null) {
+//            addAgenciesDifferently(agent);
+//        }
+//
+//        return agent;
+//    }
+
     @Override
     public Agent add(Agent agent) {
 
@@ -113,4 +131,19 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         var agentAgencies = jdbcTemplate.query(sql, new AgentAgencyMapper(), agent.getAgentId());
         agent.setAgencies(agentAgencies);
     }
-}
+
+//    private void addAgenciesDifferently(Agent agent) {
+//
+//        final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
+//                + "sc.security_clearance_id, sc.name security_clearance_name, "
+//                + "a.short_name, a.long_name, al.name, al.persona "
+//                + "from agency_agent aa "
+//                + "inner join agency a on aa.agency_id = a.agency_id "
+//                + "inner join alias al on aa.agent_id = al.agent_id "
+//                + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
+//                + "where aa.agent_id = ?;";
+//
+//        var agentAgencies = jdbcTemplate.query(sql, new MapperForAddingAlias(), agent.getAgentId());
+//        agent.setAgencies(agentAgencies);
+//    }
+}//end

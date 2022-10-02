@@ -19,15 +19,6 @@ public class AliasController {
         this.service = service;
     }
 
-    @GetMapping("/{aliasId}")
-    public ResponseEntity<Alias> findById(@PathVariable int aliasId) {
-        Alias alias = service.findById(aliasId);
-        if (alias == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(alias);
-    }//findById
-
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody Alias alias) {
         Result<Alias> result = service.add(alias);

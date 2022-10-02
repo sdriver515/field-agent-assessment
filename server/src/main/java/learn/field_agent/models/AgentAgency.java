@@ -12,6 +12,8 @@ public class AgentAgency {
     private Agency agency;
     private SecurityClearance securityClearance;
 
+//    private Alias alias; //I added
+
     public int getAgentId() {
         return agentId;
     }
@@ -59,4 +61,13 @@ public class AgentAgency {
     public void setSecurityClearance(SecurityClearance securityClearance) {
         this.securityClearance = securityClearance;
     }
-}
+
+//    public Alias getAlias() {//I added
+//        return alias;
+//    }//getAlias
+//
+//    public void setAlias(Alias alias) {//I added
+//        this.alias = alias;
+//    }//setAlias
+
+}//end
