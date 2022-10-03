@@ -105,12 +105,13 @@ begin
     delete from agency_agent;
 	delete from agency;
 	alter table agency auto_increment = 1;
+    delete from alias;
+	alter table alias auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
     delete from security_clearance;
     alter table security_clearance auto_increment = 1;
-	delete from alias;
-	alter table alias auto_increment = 1;
+	
     
     insert into security_clearance(security_clearance_id, name) values 
 		(1, 'Secret'),
@@ -143,7 +144,9 @@ begin
 		('Phylys','Y','Howitt','1979-03-28',68);
         
         insert into alias(alias_id, name, persona, agent_id) values
-		(1, 'Me', 'Student', 3);
+		(1, 'Me', 'Student', 3),
+        (2, 'Mathias', 'Nurse', 4),
+        (3, 'Bec', 'Lawyer', 5);
         
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)

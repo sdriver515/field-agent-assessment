@@ -8,7 +8,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
+import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -81,6 +83,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleIOException(IOException ex) {
         return new ResponseEntity<>(
                 new ErrorResponse("IO Exception."),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMediaTypeException.class)
+    public ResponseEntity<ErrorResponse> handleMediaTypeException(HttpMediaTypeException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse("Media Type Exception."),
+                HttpStatus.BAD_REQUEST);//check this type
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMediaTypeException(HttpMessageNotReadableException ex){
+        return new ResponseEntity<>(
+                new ErrorResponse("Http message not readable."),
                 HttpStatus.BAD_REQUEST);
     }
 
