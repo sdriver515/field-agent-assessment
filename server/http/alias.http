@@ -5,7 +5,6 @@
 
 GET http://localhost:8080/api/agent/1 HTTP/1.1
 
-
 ### [ ] POST an alias
 
 POST {{url}} HTTP/1.1
