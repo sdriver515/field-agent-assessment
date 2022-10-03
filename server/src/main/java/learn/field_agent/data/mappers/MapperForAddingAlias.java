@@ -21,8 +21,8 @@ import java.sql.SQLException;
 //        AgencyMapper agencyMapper = new AgencyMapper();
 //        agentAgency.setAgency(agencyMapper.mapRow(resultSet, i));
 //
-//        AliasMapper aliasMapper = new AliasMapper();
-//        agentAgency.setAlias(aliasMapper.mapRow(resultSet, i));
+//        AliasMapperV2 aliasMapperV2 = new AliasMapperV2();
+//        agentAgency.setAlias(aliasMapperV2.mapRow(resultSet, i));
 //
 //        return agentAgency;
 //    }

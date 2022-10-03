@@ -39,6 +39,13 @@ class AgentJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindWinn() {
+        Agent winn = repository.findById(3);
+        assertEquals(3, winn.getAgentId());
+        assertEquals("Winn", winn.getFirstName());
+        assertEquals(1, winn.getAgencies().size());
+    }
+    @Test
     void shouldFindHazel() {
         Agent hazel = repository.findById(1);
         assertEquals(1, hazel.getAgentId());

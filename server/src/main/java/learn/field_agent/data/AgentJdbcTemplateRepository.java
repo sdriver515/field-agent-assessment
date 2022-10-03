@@ -136,11 +136,11 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 //
 //        final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
 //                + "sc.security_clearance_id, sc.name security_clearance_name, "
-//                + "a.short_name, a.long_name, al.name, al.persona "
+//                + "a.short_name, a.long_name, al.alias_id, al.name as alias_name, al.persona "
 //                + "from agency_agent aa "
 //                + "inner join agency a on aa.agency_id = a.agency_id "
-//                + "inner join alias al on aa.agent_id = al.agent_id "
 //                + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
+//                + "left join alias al on aa.agent_id = al.agent_id "
 //                + "where aa.agent_id = ?;";
 //
 //        var agentAgencies = jdbcTemplate.query(sql, new MapperForAddingAlias(), agent.getAgentId());

@@ -20,7 +20,7 @@ public class ErrorResponse {
     //this below is just a static method - do not get rid of it
     public static <T> ResponseEntity<Object> build(Result<T> result) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;//returning an internal server error
-        if (result.getType() == null || result.getType() == ResultType.INVALID) {//but if the type is null...
+        if (result.getType() == null || result.getType() == ResultType.INVALID) {//but if the type is null or invalid...
             status = HttpStatus.BAD_REQUEST;
         } else if (result.getType() == ResultType.NOT_FOUND) {
             status = HttpStatus.NOT_FOUND;
