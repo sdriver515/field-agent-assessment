@@ -44,6 +44,7 @@ public class AliasJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdate() {
         Alias alias = makeAlias();
+        alias.setName("Joe");
         alias.setPersona("Fake persona");
         assertTrue(repository.update(alias));
 
