@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    //PER BRIT
+
     @ExceptionHandler(Exception.class) //this is a general exception
     public ResponseEntity<ErrorResponse> handleException(Exception ex){
         return new ResponseEntity<>(
@@ -28,8 +28,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }//handleException
 
-    //SECOND EXCEPTION HANDLER
-    //they want us to handle a data integrity violation exception
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         return new ResponseEntity<>(
