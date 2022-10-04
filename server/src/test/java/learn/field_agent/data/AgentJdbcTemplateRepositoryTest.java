@@ -47,12 +47,6 @@ class AgentJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindWinnsAliases() {
-        Agent winn = repository.findById(3);
-        assertEquals(1, winn.getAliases().size());
-    }
-
-    @Test
     void shouldAdd() {
         // all fields
         Agent agent = makeAgent();
