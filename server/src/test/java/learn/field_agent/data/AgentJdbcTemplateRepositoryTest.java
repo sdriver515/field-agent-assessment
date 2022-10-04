@@ -43,6 +43,13 @@ class AgentJdbcTemplateRepositoryTest {
         assertEquals(1, hazel.getAgentId());
         assertEquals("Hazel", hazel.getFirstName());
         assertEquals(2, hazel.getAgencies().size());
+        assertEquals(0, hazel.getAliases().size());
+    }
+
+    @Test
+    void shouldFindWinnsAliases() {
+        Agent winn = repository.findById(3);
+        assertEquals(1, winn.getAliases().size());
     }
 
     @Test

@@ -90,17 +90,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMediaTypeException(HttpMediaTypeException ex) {
         return new ResponseEntity<>(
                 new ErrorResponse("Media Type Exception."),
-                HttpStatus.BAD_REQUEST);//check this type
+                HttpStatus.UNSUPPORTED_MEDIA_TYPE);//check this type
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleHttpMediaTypeException(HttpMessageNotReadableException ex){
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex){
         return new ResponseEntity<>(
                 new ErrorResponse("Http message not readable."),
                 HttpStatus.BAD_REQUEST);
     }
-
-
 
 
 
