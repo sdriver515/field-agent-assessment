@@ -38,21 +38,19 @@ public class AliasServiceTest {
     }//shouldAdd
 
     @Test
-    void shouldRequirePersonaIfDuplicateName() {
+    void shouldRequireNameIfAdding() {
         Alias alias = new Alias();
         alias.setName("Penny Smith");
         alias.setAgentId(1);
         Result<Alias> actual = service.add(alias);
 
         Alias aliasTwo = new Alias();
-        alias.setName("Penny Smith");
-        alias.setAgentId(2);
         actual = service.add(aliasTwo);
         assertEquals(ResultType.INVALID, actual.getType());
-    }//shouldRequirePersonaIfDuplicateName
+    }//shouldRequireNameIfAdding
 
     @Test
-    void shouldNotAddWhenInvalid() {
+    void shouldNotAddWhenNameBlankString() {
         Alias alias = makeAlias();
         alias.setName("   ");
 
@@ -63,7 +61,24 @@ public class AliasServiceTest {
         alias.setName(null);
         actual = service.add(alias);
         assertEquals(ResultType.INVALID, actual.getType());
-    }//shouldNotAddWhenInvalid
+    }//shouldNotAddWhenNameBlankString
+
+    @Test
+    void shouldPassDuplicateNameIfPersonasDifferent() {
+        Alias alias = new Alias();
+        alias.setName("Penny Smith");
+        alias.setPersona("Some random.");
+        alias.setAgentId(1000);
+        Result<Alias> actual = service.add(alias);
+
+
+        Alias aliasTwo = new Alias();
+        aliasTwo.setName("Penny Smith");
+        aliasTwo.setPersona("A math professor for UD");
+        aliasTwo.setAgentId(1000);
+        actual = service.add(aliasTwo);
+        assertEquals(ResultType.SUCCESS, actual.getType());
+    }//shouldPassDuplicateNameIfPersonasDifferent
 
     @Test
     void shouldNotAddWhenDuplicate() {

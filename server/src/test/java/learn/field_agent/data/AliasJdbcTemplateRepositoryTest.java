@@ -24,8 +24,6 @@ public class AliasJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
-    //Something to find alias via agent
-
     @Test
     void shouldFindAll(){
         List<Alias> actual = repository.findAll();
@@ -47,6 +45,7 @@ public class AliasJdbcTemplateRepositoryTest {
         alias.setName("Joe");
         alias.setAliasId(1);
         alias.setPersona("Fake persona");
+        repository.add(alias);
         assertTrue(repository.update(alias));
 
         alias.setAliasId(12);
