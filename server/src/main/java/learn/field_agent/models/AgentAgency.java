@@ -12,7 +12,7 @@ public class AgentAgency {
     private Agency agency;
     private SecurityClearance securityClearance;
 
-//    private Alias alias; //I added
+    private Alias alias; //I added
 
     public int getAgentId() {
         return agentId;
@@ -62,12 +62,12 @@ public class AgentAgency {
         this.securityClearance = securityClearance;
     }
 
-//    public Alias getAlias() {//I added
-//        return alias;
-//    }//getAlias
-//
-//    public void setAlias(Alias alias) {//I added
-//        this.alias = alias;
-//    }//setAlias
+    public Alias getAlias() {//I added
+        return alias;
+    }//getAlias
+
+    public void setAlias(Alias alias) {//I added
+        this.alias = alias;
+    }//setAlias
 
 }//end
