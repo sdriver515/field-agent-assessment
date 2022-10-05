@@ -60,7 +60,17 @@ public class SecurityClearanceService {
         return result;
     }//updates
 
-    public boolean deleteById(int securityClearanceId) {//likely need to fix this up
+    public boolean deleteById(int securityClearanceId) {
+//        Result<SecurityClearance> result = new Result<>();
+//        List<SecurityClearance> existingSecurityClearances = repository.findAll();
+//
+//        for(SecurityClearance s: existingSecurityClearances){
+//            if(securityClearanceId != s.getSecurityClearanceId()){
+//                result.addMessage("This security clearance ID does not exist.", ResultType.INVALID);
+//            } else if (securityClearanceId == s.getSecurityClearanceId()){
+//
+//            }
+//        }
         return repository.deleteById(securityClearanceId);
     }//deleteById
 
