@@ -11,6 +11,25 @@ public class AgencyAgent {
 
     private Agent agent;
     private SecurityClearance securityClearance;
+    private int agentId; //I added
+
+    public int getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(int agentId) {
+        this.agentId = agentId;
+    }
+
+    public int getSecurityClearanceId() {
+        return securityClearanceId;
+    }
+
+    public void setSecurityClearanceId(int securityClearanceId) {
+        this.securityClearanceId = securityClearanceId;
+    }
+
+    private int securityClearanceId; //I added
 
     public int getAgencyId() {
         return agencyId;

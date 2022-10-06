@@ -1,7 +1,9 @@
 package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AgencyAgentMapper;
+import learn.field_agent.data.mappers.MapperForSecurityClearanceIdsFromAgencyAgent;
 import learn.field_agent.models.AgencyAgent;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +20,11 @@ public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository 
 
     @Override
     public List<AgencyAgent> findBySecurityAgentId(int securityClearanceId) {
-        // limit until we develop a paging solution
-        final String sql = "select agent_id from agency_agent where security_clearance_id = ?;";
-        return jdbcTemplate.query(sql, new AgencyAgentMapper());
+        final String sql = "select agency_id, agent_id, identifier, security_clearance_id, activation_date, is_active "
+                + "from agency_agent "
+                + "where security_clearance_id = ?;";
+        return jdbcTemplate.query(sql, new MapperForSecurityClearanceIdsFromAgencyAgent(), securityClearanceId);
+//        return jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearanceId);
     }
 
     @Override

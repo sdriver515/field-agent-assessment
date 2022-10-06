@@ -4,6 +4,10 @@ select * from location;
 select * from agent;
 select * from alias;
 
+select agent_id
+from agency_agent
+where security_clearance_id = 1;
+
 select security_clearance_id, name
 from security_clearance
 where security_clearance_id = 1;

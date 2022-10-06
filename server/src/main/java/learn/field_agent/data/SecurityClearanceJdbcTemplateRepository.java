@@ -58,9 +58,9 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
         SecurityClearance result = jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId).stream()
                 .findAny().orElse(null);
 
-        if (result != null) {
-            addAgentIds(result);
-        }
+//        if (result != null) {
+//            addAgentIds(result);
+//        }
 
         return result;
     }//findById
@@ -98,13 +98,13 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 //        securityClearance.setAgents(agencyAgents);
 //    }//addAgents
 
-        private void addAgentIds(SecurityClearance securityClearance) {
-
-        final String sql = "select agent_id from agency_agent where security_clearance_id = ?";
-
-        var agencyAgents = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearance.getSecurityClearanceId());
-        securityClearance.setAgents(agencyAgents);
-    }//addAgents
+//        private void addAgentIds(SecurityClearance securityClearance) {
+//
+//        final String sql = "select agent_id from agency_agent where security_clearance_id = ?";
+//
+//        var agencyAgents = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearance.getSecurityClearanceId());
+//        securityClearance.setAgents(agencyAgents);
+//    }//addAgents
 
 
 

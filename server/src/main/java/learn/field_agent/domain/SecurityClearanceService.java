@@ -13,6 +13,7 @@ public class SecurityClearanceService {
     private final SecurityClearanceRepository repository;
     private final AgencyAgentRepository agencyAgentRepository;
 
+
     public SecurityClearanceService(SecurityClearanceRepository repository,AgencyAgentRepository agencyAgentRepository) {
         this.repository = repository;
         this.agencyAgentRepository = agencyAgentRepository;
@@ -61,16 +62,22 @@ public class SecurityClearanceService {
         return result;
     }//updates
 
-    public boolean deleteById(int securityClearanceId) {
+    public Result<SecurityClearance> deleteById(int securityClearanceId) {
         Result<SecurityClearance> result = new Result<>();
         List<AgencyAgent> existingAgencyAgents = agencyAgentRepository.findBySecurityAgentId(securityClearanceId);
-        if(existingAgencyAgents.size() > 0) {
-            return repository.deleteById(securityClearanceId);
+        if(existingAgencyAgents.size() == 0) {
+            if (repository.deleteById(securityClearanceId)){
+                return result;
+            } else {
+                result.addMessage("security clearance not found", ResultType.NOT_FOUND);
+                return result;
+            }
         }
-        if(existingAgencyAgents.size() < 0) {
-            result.addMessage("securityClearance cannot be null", ResultType.INVALID);
+        if(existingAgencyAgents.size() > 0){
+            result.addMessage("securityClearance in use", ResultType.INVALID);
+            return result;
         }
-        return false; //double check this goes through
+            return result;
     }//deleteById
 
     private Result<SecurityClearance> validate(SecurityClearance securityClearance) {
