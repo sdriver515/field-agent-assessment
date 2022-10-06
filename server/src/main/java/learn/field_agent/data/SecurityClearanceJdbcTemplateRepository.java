@@ -31,6 +31,23 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     }//findAll
 
+//    @Override
+//    public SecurityClearance findById(int securityClearanceId) {
+//
+//        final String sql = "select security_clearance_id, `name` as security_clearance_name "
+//                + "from security_clearance "
+//                + "where security_clearance_id = ?;";
+//
+//        SecurityClearance result = jdbcTemplate.query(sql, new SecurityClearanceMapper(), securityClearanceId).stream()
+//                .findAny().orElse(null);
+//
+//        if (result != null) {
+//            addAgents(result);
+//        }
+//
+//        return result;
+//    }//findById
+
     @Override
     public SecurityClearance findById(int securityClearanceId) {
 
@@ -42,7 +59,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
                 .findAny().orElse(null);
 
         if (result != null) {
-            addAgents(result);
+            addAgentIds(result);
         }
 
         return result;
@@ -67,19 +84,29 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
         return securityClearance;
     }//add
 
-    private void addAgents(SecurityClearance securityClearance) {//not sure how well this will work
+//    private void addAgents(SecurityClearance securityClearance) {//not sure how well this will work
+//
+//        final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
+//                + "sc.security_clearance_id, sc.name security_clearance_name, "
+//                + "a.first_name, a.middle_name, a.last_name, a.dob, a.height_in_inches "
+//                + "from agency_agent aa "
+//                + "inner join agent a on aa.agent_id = a.agent_id "
+//                + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
+//                + "where aa.security_clearance_id = ?";
+//
+//        var agencyAgents = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearance.getSecurityClearanceId());
+//        securityClearance.setAgents(agencyAgents);
+//    }//addAgents
 
-        final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
-                + "sc.security_clearance_id, sc.name security_clearance_name, "
-                + "a.first_name, a.middle_name, a.last_name, a.dob, a.height_in_inches "
-                + "from agency_agent aa "
-                + "inner join agent a on aa.agent_id = a.agent_id "
-                + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
-                + "where aa.security_clearance_id = ?";
+        private void addAgentIds(SecurityClearance securityClearance) {
+
+        final String sql = "select agent_id from agency_agent where security_clearance_id = ?";
 
         var agencyAgents = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearance.getSecurityClearanceId());
         securityClearance.setAgents(agencyAgents);
     }//addAgents
+
+
 
     @Override
     public boolean update(SecurityClearance securityClearance) {

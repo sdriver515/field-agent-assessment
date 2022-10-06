@@ -1,10 +1,9 @@
 package learn.field_agent.domain;
 
+import learn.field_agent.data.AgencyAgentRepository;
+import learn.field_agent.data.AgencyRepository;
 import learn.field_agent.data.SecurityClearanceRepository;
-import learn.field_agent.models.Agency;
-import learn.field_agent.models.Agent;
-import learn.field_agent.models.Location;
-import learn.field_agent.models.SecurityClearance;
+import learn.field_agent.models.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +11,11 @@ import java.util.List;
 @Service
 public class SecurityClearanceService {
     private final SecurityClearanceRepository repository;
+    private final AgencyAgentRepository agencyAgentRepository;
 
-    public SecurityClearanceService(SecurityClearanceRepository repository) {
+    public SecurityClearanceService(SecurityClearanceRepository repository,AgencyAgentRepository agencyAgentRepository) {
         this.repository = repository;
+        this.agencyAgentRepository = agencyAgentRepository;
     }
 
     public Result<SecurityClearance> add(SecurityClearance securityClearance) {
@@ -61,17 +62,15 @@ public class SecurityClearanceService {
     }//updates
 
     public boolean deleteById(int securityClearanceId) {
-//        Result<SecurityClearance> result = new Result<>();
-//        List<SecurityClearance> existingSecurityClearances = repository.findAll();
-//
-//        for(SecurityClearance s: existingSecurityClearances){
-//            if(securityClearanceId != s.getSecurityClearanceId()){
-//                result.addMessage("This security clearance ID does not exist.", ResultType.INVALID);
-//            } else if (securityClearanceId == s.getSecurityClearanceId()){
-//
-//            }
-//        }
-        return repository.deleteById(securityClearanceId);
+        Result<SecurityClearance> result = new Result<>();
+        List<AgencyAgent> existingAgencyAgents = agencyAgentRepository.findBySecurityAgentId(securityClearanceId);
+        if(existingAgencyAgents.size() > 0) {
+            return repository.deleteById(securityClearanceId);
+        }
+        if(existingAgencyAgents.size() < 0) {
+            result.addMessage("securityClearance cannot be null", ResultType.INVALID);
+        }
+        return false; //double check this goes through
     }//deleteById
 
     private Result<SecurityClearance> validate(SecurityClearance securityClearance) {

@@ -9,6 +9,13 @@ public class SecurityClearance {
     private int securityClearanceId;
     private String name;
     private List<AgencyAgent> agents = new ArrayList<>();
+    private AgencyAgent agent;//I added
+    public AgencyAgent getAgent() {//I added
+        return agent;
+    }
+    public void setAgent(AgencyAgent agent) {//I added
+        this.agent = agent;
+    }
 
     public int getSecurityClearanceId() {
         return securityClearanceId;
@@ -39,6 +46,10 @@ public class SecurityClearance {
     public SecurityClearance(int securityClearanceId, String name) {
         this.securityClearanceId = securityClearanceId;
         this.name = name;
+    }
+
+    public SecurityClearance(AgencyAgent agent) {//I added
+        this.agent = agent;
     }
 
     @Override
