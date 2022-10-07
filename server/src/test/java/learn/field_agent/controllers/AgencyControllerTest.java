@@ -51,7 +51,6 @@ class AgencyControllerTest {
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());
-
     }
 
     @Test
@@ -91,4 +90,4 @@ class AgencyControllerTest {
                 .andExpect(content().json(expectedJson));
     }
 
-}
+}//end

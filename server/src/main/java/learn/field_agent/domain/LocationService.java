@@ -31,7 +31,7 @@ public class LocationService {
         location = repository.add(location);
         result.setPayload(location);
         return result;
-    }
+    }//add
 
     public Result<Location> update(Location location) {
         Result<Location> result = validate(location);
@@ -50,7 +50,7 @@ public class LocationService {
         }
 
         return result;
-    }
+    }//update
 
     public boolean deleteById(int locationId) {
         return repository.deleteById(locationId);

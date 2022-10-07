@@ -1,5 +1,7 @@
 package learn.field_agent.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SecurityClearance {
@@ -44,4 +46,5 @@ public class SecurityClearance {
     public int hashCode() {
         return Objects.hash(securityClearanceId, name);
     }
-}
+
+}//end

@@ -1,8 +1,13 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AgencyAgentMapper;
+import learn.field_agent.data.mappers.MapperForSecurityClearanceIdsFromAgencyAgent;
 import learn.field_agent.models.AgencyAgent;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository {
@@ -11,6 +16,15 @@ public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository 
 
     public AgencyAgentJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<AgencyAgent> findBySecurityAgentId(int securityClearanceId) {
+        final String sql = "select agency_id, agent_id, identifier, security_clearance_id, activation_date, is_active "
+                + "from agency_agent "
+                + "where security_clearance_id = ?;";
+        return jdbcTemplate.query(sql, new MapperForSecurityClearanceIdsFromAgencyAgent(), securityClearanceId);
+//        return jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearanceId);
     }
 
     @Override

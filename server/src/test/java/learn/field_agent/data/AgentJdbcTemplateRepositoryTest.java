@@ -37,13 +37,13 @@ class AgentJdbcTemplateRepositoryTest {
         // if add is first, we may go as high as 10
         assertTrue(agents.size() >= 7 && agents.size() <= 10);
     }
-
     @Test
     void shouldFindHazel() {
         Agent hazel = repository.findById(1);
         assertEquals(1, hazel.getAgentId());
         assertEquals("Hazel", hazel.getFirstName());
         assertEquals(2, hazel.getAgencies().size());
+        assertEquals(0, hazel.getAliases().size());
     }
 
     @Test
