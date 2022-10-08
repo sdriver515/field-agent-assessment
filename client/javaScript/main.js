@@ -56,32 +56,11 @@ function handleSubmit(event){
         dob, //might need to pare something here
         heightInInches: heightInInches ? parseInt(heightInInches) : 0,
     };
-
-    const init = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(agent)
-    };
-    fetch('http://localhost:8080/api/agent', init)
-    .then(response => {
-        if(response.status === 201 || response.status === 400){
-            return response.json();
-        } else{
-            return Promise.reject(`Unexpected status code: ${response.status}`);
-        }
-    })
-    .then(data => {
-        if(data.agentId){
-            displayList();
-            resetErrors();
-            event.target.reset();
-        } else{
-            renderErrors(data);
-        }
-    })
-    .catch(error => console.log(error))
+    if(editAgentId > 0 ){
+        doPut(agent);
+    } else{
+        doPost(agent);
+    }
 }//handleSubmit
 
 //update
@@ -118,9 +97,73 @@ function handleDeleteAgent(agentId){
         document.getElementById('errors').innerHTML = errorsHTMLString;
     }//renderErrors
 
-    function resetErrors(){
+    //handle posts and puts
+    
+    function doPost(agent){
+        const init = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(agent)
+        };
+        fetch('http://localhost:8080/api/agent', init)
+        .then(response => {
+            if(response.status === 201 || response.status === 400){
+                return response.json();
+            } else{
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .then(data => {
+            if(data.agentId){
+                displayList();
+                resetState();
+            } else{
+                renderErrors(data);
+            }
+        })
+        .catch(error => console.log(error))
+
+    }//doPost
+
+    function doPut(agent){
+        agent.agentId = editAgentId;
+
+        const init = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(agent)
+        };
+        fetch(`http://localhost:8080/api/agent/${editAgentId}`, init)
+        .then(response => {
+            if(response.status === 204){
+                return null;
+            } else if(response.status === 400){
+                return response.json();
+            } else{
+                return Promise.reject(`Unexpected staatus code: ${response.status}`);
+            }
+        })
+        .then(data => {
+            if(!data){
+                displayList();
+                resetState();
+            } else{
+                renderErrors(data);
+            }
+        })
+        .catch(console.log);
+    }//doPut
+
+    function resetState(){
+        document.getElementById('form').reset();
+        document.getElementById('formSubmitButton').innerText = 'Add agent';
         document.getElementById('errors').innerHTML = '';
-    }//resetErrors
+        editAgentId = 0;
+    }//resetState
 
 displayList();
 
