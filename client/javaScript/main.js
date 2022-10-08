@@ -82,8 +82,23 @@ function handleEditAgent(agentId){
 
 //delete
 function handleDeleteAgent(agentId){
-
-}//haandleDeleteAgent
+    const agent = agents.find(agent => agent.agentId === agentId);
+    if(confirm(`Delete the agent ${agent.firstName} ${agent.middleName} ${agent.lastName}?`)){
+        const init = {
+            method: 'DELETE'
+        };
+        fetch(`${endpoint}/${agentId}`, init)
+        .then(response => {
+            if(response.status === 204){
+                displayList();
+                resetState();
+            } else{
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .catch(console.log);
+    }
+}//handleDeleteAgent
 
 //handle errors
     function renderErrors(errors){
