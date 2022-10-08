@@ -26,8 +26,8 @@ function renderList(agents){
         <td>${a.dob}</td>
         <td>${a.heightInInches}</td>
         <td>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onclick="handleEditAgent(${a.agentId})">Edit</button>
+            <button onclick="handleDeleteAgent(${a.agentId})">Delete</button>
             </td>
         </tr>
         `
@@ -37,6 +37,7 @@ function renderList(agents){
         tableBodyElement.innerHTML = agentsHTML.join('');
 }//renderList
 
+//handling submitting
 function handleSubmit(event){
     event.preventDefault();
     const firstName = document.getElementById('firstName').value;
@@ -71,6 +72,7 @@ function handleSubmit(event){
     .then(data => {
         if(data.agentId){
             displayList();
+            resetErrors();
             event.target.reset();
         } else{
             renderErrors(data);
@@ -79,6 +81,17 @@ function handleSubmit(event){
     .catch(error => console.log(error))
 }//handleSubmit
 
+//update
+function handleEditAgent(agentId){
+
+}//handleEditAgent
+
+//delete
+function handleDeleteAgent(agentId){
+
+}//haandleDeleteAgent
+
+//handle errors
     function renderErrors(errors){
         const errorsHTML = errors.map(e =>`<li>${e}</li>`);
         const errorsHTMLString = `
@@ -89,6 +102,10 @@ function handleSubmit(event){
         `;
         document.getElementById('errors').innerHTML = errorsHTMLString;
     }//renderErrors
+
+    function resetErrors(){
+        document.getElementById('errors').innerHTML = '';
+    }//resetErrors
 
 displayList();
 
