@@ -39,6 +39,47 @@ function renderList(agents){
         tableBodyElement.innerHTML = agentsHTML.join('');
 }//renderList
 
+function handleSubmit(event){
+    event.preventDefault();
+    const firstName = document.getElementById('firstName').value;
+    const middleName = document.getElementById('middleName').value;
+    const lastName = document.getElementById('lastName').value;
+    const dob = document.getElementById('dob').value;
+    const heightInInches = document.getElementById('heightInInches').value;
+
+    const agent = {
+        firstName,
+        middleName,
+        lastName,
+        dob, //might need to pare something here
+        heightInInches: heightInInches ? parseInt(heightInInches) : 0,
+    };
+
+    const init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(agent)
+    };
+    fetch('http://localhost:8080/api/agent', init)
+    .then(response => {
+        if(response.status === 201 || response.status === 400){
+            return response.json();
+        } else{
+            return Promise.reject(`Unexpected status code: ${response.status}`);
+        }
+    })
+    .then(data => {
+        if(data.agentId){
+            console.log(data);
+        } else{
+            console.log(data);
+        }
+    })
+    .catch(error => console.log(error))
+}//handleSubmit
+
 
 
 
