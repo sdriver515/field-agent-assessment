@@ -5,7 +5,10 @@ let editAgentId = 0;
 
 function displayList(){
     getAgents()
-    .then(data => renderList(data));
+    .then(data => {
+        agents = data;
+        renderList(data)
+    });
 }//displayList
 
 function getAgents(){
@@ -83,6 +86,18 @@ function handleSubmit(event){
 
 //update
 function handleEditAgent(agentId){
+        const agent = agents.find(agent => agent.agentId === agentId);
+
+        document.getElementById('firstName').value = agent.firstName;
+        document.getElementById('middleName').value = agent.middleName;
+        document.getElementById('lastName').value = agent.lastName;
+        document.getElementById('dob').value = agent.dob;
+        document.getElementById('heightInInches').value = agent.heightInInches;
+
+        document.getElementById('formHeading').innerText = "Update Agent";
+        document.getElementById('formSubmitButton').innerText = "Update Agent";
+
+        editAgentId = agentId;
 
 }//handleEditAgent
 
