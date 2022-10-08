@@ -3,12 +3,10 @@ const endpoint = 'http://localhost:8080/api/agent';
 let agents = [];
 let editAgentId = 0;
 
-function init(){
+function displayList(){
     getAgents()
     .then(data => renderList(data));
-}//init
-
-init();
+}//displayList
 
 function getAgents(){
     return fetch(endpoint)
@@ -72,13 +70,27 @@ function handleSubmit(event){
     })
     .then(data => {
         if(data.agentId){
-            console.log(data);
+            displayList();
+            event.target.reset();
         } else{
-            console.log(data);
+            renderErrors(data);
         }
     })
     .catch(error => console.log(error))
 }//handleSubmit
+
+    function renderErrors(errors){
+        const errorsHTML = errors.map(e =>`<li>${e}</li>`);
+        const errorsHTMLString = `
+            <p>These errors were found: </p>
+            <ul>
+                ${errorsHTML.join('')}
+            </ul>
+        `;
+        document.getElementById('errors').innerHTML = errorsHTMLString;
+    }//renderErrors
+
+displayList();
 
 
 
