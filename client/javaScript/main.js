@@ -4,6 +4,7 @@ let agents = [];
 let editAgentId = 0;
 
 function displayList(){
+    setCurrentView('List');
     getAgents()
     .then(data => {
         agents = data;
@@ -17,6 +18,21 @@ function getAgents(){
         return response.json();
     })
 }//getAgents
+
+function setCurrentView(view){
+    const formContainerElement = document.getElementById('formContainer');
+    const listContainerElement = document.getElementById('listContainer');
+
+    switch(view){
+        case 'List':
+            formContainerElement.style.display = 'none';
+            listContainerElement.style.display = 'block';
+            break;
+        case 'Form':
+            formContainerElement.style.display = 'block';
+            listContainerElement.style.display = 'none';
+    }
+}
 
 function renderList(agents){
     const tableBodyElement = document.getElementById('tableRows');  
@@ -63,6 +79,11 @@ function handleSubmit(event){
     }
 }//handleSubmit
 
+//handle Add
+function handleAddAgent(){
+    setCurrentView('Form');
+}
+
 //update
 function handleEditAgent(agentId){
         const agent = agents.find(agent => agent.agentId === agentId);
@@ -77,6 +98,7 @@ function handleEditAgent(agentId){
         document.getElementById('formSubmitButton').innerText = "Update Agent";
 
         editAgentId = agentId;
+        setCurrentView('Form');
 
 }//handleEditAgent
 
@@ -178,6 +200,7 @@ function handleDeleteAgent(agentId){
         document.getElementById('formSubmitButton').innerText = 'Add agent';
         document.getElementById('errors').innerHTML = '';
         editAgentId = 0;
+        setCurrentView('List');
     }//resetState
 
 displayList();
