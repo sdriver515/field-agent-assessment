@@ -161,7 +161,6 @@ function handleDeleteAgent(agentId){
             }
         })
         .catch(error => console.log(error))
-
     }//doPost
 
     function doPut(agent){
