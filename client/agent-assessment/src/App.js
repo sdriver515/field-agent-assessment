@@ -11,11 +11,10 @@ import AgentList from "./components/AgentList";
 function App() {
   return (
     <Router>
-      <h1>Welcome To The Agent Tracker</h1>
-      <Navigation />
+      <h1>A Very Secret Agent Tracker</h1>
       <Switch>
-        <Route path="/" exact>
-          <AgentList />
+        <Route path="/agents" exact>
+        <AgentList />
         </Route>
         <Route path="/about">
           <About />
@@ -26,8 +25,13 @@ function App() {
         <Route path={["/agents/add", "/agents/edit/:agentId"]}>
           <AgentForm />
         </Route>
+        <Route path="/">
+        <Navigation />
+        <h2>Welcome to home base!</h2>
+        <h3>Please click one of the sections above to explore options.</h3>
+        </Route>
         <Route path="*">
-          <NotFound />
+        <NotFound />
         </Route>
       </Switch>
     </Router>

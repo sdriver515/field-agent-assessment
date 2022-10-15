@@ -35,7 +35,7 @@ useEffect(() => {
     } else {
         newAgent[event.target.name] = event.target.value;
     }
-    newAgent[event.target.name] = event.target.value; //NEW LINE
+    newAgent[event.target.name] = event.target.value; 
     setAgent(newAgent);
 };
 
@@ -71,7 +71,7 @@ const updateAgent = () => {
       .then((data) => {
         if (!data) {
           resetState();
-          history.push("/");
+          history.push("/agents");
         } else {
           setErrors(data);
         }
@@ -98,7 +98,7 @@ const addAgent = () => {
         .then((data) => {
           if (data.agentId) {
             resetState();
-            history.push("/");
+            history.push("/agents");
           } else {
             setErrors(data);
           }
@@ -192,7 +192,7 @@ return (
           <button className="btn btn-success mr-4" type="submit">
             {editAgentId > 0 ? "Update Agent" : "Add Agent"}
           </button>
-          <Link className="btn btn-warning" to="/" exact>
+          <Link className="btn btn-warning" to="/agents" exact>
             Cancel
           </Link>
         </div>
