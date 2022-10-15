@@ -48,7 +48,36 @@ const handleSubmit = (event) => {
     }
 };
 
-const updateAgent = () => {};
+const updateAgent = () => {
+  agent.agentId = editAgentId;
+        const init = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(agent),
+        };
+
+    fetch(`${endpoint}/${editAgentId}`, init)
+      .then((response) => {
+        if (response.status === 204) {
+          return null;
+        } else if (response.status === 400) {
+          return response.json();
+        } else {
+          return Promise.reject(`Unexpected status code: ${response.status}`);
+        }
+      })
+      .then((data) => {
+        if (!data) {
+          resetState();
+          history.push("/");
+        } else {
+          setErrors(data);
+        }
+      })
+      .catch(console.log);
+};
 
 const addAgent = () => {
     const init = {
