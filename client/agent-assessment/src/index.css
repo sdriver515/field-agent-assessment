@@ -3,7 +3,6 @@
   margin:0;
   box-sizing: border-box;
   max-width:100%;
-  /* border:1px solid grey; */
 }
 html{
   font-size:62.5%;
@@ -31,6 +30,7 @@ td{
   display:flex;
   justify-content: space-evenly;
 }
-button, input{
+button, input, link, a{
   font-size:2rem !important;
 }
+
