@@ -31,11 +31,12 @@ useEffect(() => {
     const newAgent = {...agent};
 
     //might delete all this because it is for the checkbox with tracking
-    if(event.target.type === 'checkbox'){
-        newAgent[event.target.name] = event.target.checked;
-    } else {
-        newAgent[event.target.name] = event.target.value;
-    }
+    // if(event.target.type === 'checkbox'){
+    //     newAgent[event.target.name] = event.target.checked;
+    // } else {
+    //     newAgent[event.target.name] = event.target.value;
+    // }
+    newAgent[event.target.name] = event.target.value; //NEW LINE
     setAgent(newAgent);
 };
 
