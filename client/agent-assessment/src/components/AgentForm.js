@@ -163,7 +163,7 @@ return (
           <button className="btn btn-success mr-4" type="submit">
             {editAgentId > 0 ? "Update Agent" : "Add Agent"}
           </button>
-          <Link className="btn btn-warning" to="/">
+          <Link className="btn btn-warning" to="/" exact>
             Cancel
           </Link>
         </div>
