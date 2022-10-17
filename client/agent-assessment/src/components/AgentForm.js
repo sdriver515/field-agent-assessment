@@ -39,7 +39,7 @@ useEffect(() => {
     setAgent(newAgent);
 };
 
-const handleSubmit = (event) => {
+const handleSubmit = event => {
     event.preventDefault();
     if(editAgentId === 0){
         addAgent();
