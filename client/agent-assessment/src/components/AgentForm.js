@@ -121,7 +121,7 @@ return (
           <h3>The following errors occured:</h3>
           <ul>
             {errors.map((error) => {
-              return <li>{error}</li>;
+              return <li key={error}>{error}</li>;
             })}
           </ul>
         </div>
